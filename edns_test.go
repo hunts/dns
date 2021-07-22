@@ -94,13 +94,13 @@ func TestEDNS0_SUBNETUnpack(t *testing.T) {
 			s1.SourceNetmask = net.IPv4len * 8
 		}
 
-		b, err := s1.pack()
+		b, err := s1.Pack()
 		if err != nil {
 			t.Fatalf("failed to pack: %v", err)
 		}
 
 		var s2 EDNS0_SUBNET
-		if err := s2.unpack(b); err != nil {
+		if err := s2.Unpack(b); err != nil {
 			t.Fatalf("failed to unpack: %v", err)
 		}
 
@@ -120,12 +120,12 @@ func TestEDNS0_UL(t *testing.T) {
 	}
 	for _, c := range cases {
 		expect := EDNS0_UL{EDNS0UL, c.l, c.kl}
-		b, err := expect.pack()
+		b, err := expect.Pack()
 		if err != nil {
 			t.Fatalf("failed to pack: %v", err)
 		}
 		actual := EDNS0_UL{EDNS0UL, ^uint32(0), ^uint32(0)}
-		if err := actual.unpack(b); err != nil {
+		if err := actual.Unpack(b); err != nil {
 			t.Fatalf("failed to unpack: %v", err)
 		}
 		if expect != actual {

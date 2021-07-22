@@ -425,7 +425,7 @@ Option:
 		return nil, len(msg), &Error{err: "overflow unpacking opt"}
 	}
 	e := makeDataOpt(code)
-	if err := e.unpack(msg[off : off+int(optlen)]); err != nil {
+	if err := e.Unpack(msg[off : off+int(optlen)]); err != nil {
 		return nil, len(msg), err
 	}
 	edns = append(edns, e)
@@ -440,7 +440,7 @@ Option:
 
 func packDataOpt(options []EDNS0, msg []byte, off int) (int, error) {
 	for _, el := range options {
-		b, err := el.pack()
+		b, err := el.Pack()
 		if err != nil || off+4 > len(msg) {
 			return len(msg), &Error{err: "overflow packing opt"}
 		}
